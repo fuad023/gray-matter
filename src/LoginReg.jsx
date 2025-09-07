@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./LoginReg.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Link } from "react-router-dom";
 
 function LoginReg() {
   const [isActive, setIsActive] = useState(false);
@@ -55,7 +56,7 @@ function LoginReg() {
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
-          <button type="button">Sign In</button>
+          <Link to="/"><button type="button">Sign In</button></Link>
         </form>
       </div>
 
@@ -66,14 +67,14 @@ function LoginReg() {
             <p>
               Enter your requested details to hop back from where you left😀
             </p>
-            <button
-              type="button"
-              className="hidden"
-              id="login"
-              onClick={() => setIsActive(false)}
-            >
-              Sign In
-            </button>
+              <button
+                type="button"
+                className="hidden"
+                id="login"
+                onClick={() => setIsActive(false)}
+              >
+                Sign In
+              </button>
           </div>
 
           <div className="toggle-panel toggle-right">
