@@ -17,19 +17,19 @@ function Post(props) {
               height="45"
             />
             <div>
-              <div className="fw-bold">Sajid Al Amin</div>
-              <div style={{fontSize: '15px'}}>2h ago</div>
+              <div className="fw-bold">{props.post.userName}</div>
+              <div style={{fontSize: '15px'}}>{props.post.timeStamp}</div>
             </div>
             <div className="ms-auto">
               <i class="bi bi-ui-radios-grid"></i>
             </div>
           </div>
           <div className="m-2">
-            This is my post Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo 
+            {props.post.caption} 
           </div>
-          {props.isImage && 
+          {props.post.hasImage && 
           <div style={{width: '600px'}}>
-            <img className="border p-1" src={props.image} alt="" width={"600px"}/>
+            <img className="border p-1" src={props.post.image} alt="" width={"600px"}/>
           </div>}
           <hr />
           <div className="d-flex align-items-center justify-content-center gap-5 m-2">
