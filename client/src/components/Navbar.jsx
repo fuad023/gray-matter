@@ -5,7 +5,7 @@ import Sidebar from '../components/Sidebar'
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <Sidebar/>
         <a className="navbar-brand ms-4" href="#">

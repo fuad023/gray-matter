@@ -14,10 +14,10 @@ function Example() {
     <>
       <Button
         variant="link"
-        className="p-0 m-0 border-0 shadow-none bg-transparent text-dark"
+        className="d-lg-none p-0 m-0 border-0 shadow-none bg-transparent text-dark"
         onClick={handleShow}
       >
-        <i className="bi bi-list fs-3"></i>
+        <i class="bi bi-gear fs-3"></i>
       </Button>
 
       <Offcanvas show={show} onHide={handleClose} backdrop={true} scroll={true} placement="start">
