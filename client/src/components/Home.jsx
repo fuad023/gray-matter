@@ -1,38 +1,17 @@
 import React from "react";
 import Post from './Post'
 import LinkedExample from "./Sidebar_list";
-import post1 from '../assets/post1.jpg'
-import post2 from '../assets/post2.jpg'
 import NewPost from "./NewPost";
+import CreatePost from './CreatePost'
+import { useState } from "react";
+import postMaterial from "./PostMaterial";
 
 const Home = () => {
-
-  let postMaterial = [
-    {
-      id: '1',
-      userName: "Sajid AL Amin",
-      hasImage: true,
-      image: post1,
-      caption: "This is my fitst post",
-      timeStamp: "2h ago",
-    },
-    {
-      id: '2',
-      userName: "Nafis Fuad",
-      hasImage: true,
-      image: post2,
-      caption: "Messi X Shakib",
-      timeStamp: "5h ago",
-    },
-    {
-      id: '3',
-      userName: "Rashedul Hasan",
-      hasImage: false,
-      image: null,
-      caption: "I have rendered a new bike model ;)",
-      timeStamp: "1d ago",
-    }
-  ]
+  const [posts, setPosts] = useState(postMaterial);
+  const [isVisible, setIsVisible] = useState(false)
+const addPost = (post) => {
+    setPosts(prevPosts => [post, ...prevPosts]);
+  };  
 
   return (
     <>
@@ -44,8 +23,9 @@ const Home = () => {
           <LinkedExample/>
         </div>
         <div className="flex-grow-1">
-          <NewPost/>
-          {postMaterial.map((postInfo) => (
+          {!isVisible && <NewPost setIsVisible={setIsVisible}/>}
+          {isVisible && <CreatePost setIsVisible={setIsVisible} addPost = {addPost}/> }
+          {posts.map((postInfo) => (
             <Post key={postInfo.id} post = {postInfo}/>
           ))}
         </div>
