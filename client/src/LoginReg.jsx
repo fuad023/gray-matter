@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLogin } from "./components/hooks/useLogin.jsx";
 import "./LoginReg.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
@@ -14,10 +15,15 @@ function LoginReg() {
   } = useForm();
 
   const { signup, error, isLoading } = useSignup()
+  const { login, login_error, login_isLoading } = useLogin()
 
 const onSubmit = async (data) => {
   await signup(data.email, data.password)
 };
+
+const onLogin = async (data) => {
+  await login(data.email, data.password)
+}
 
   const [isActive, setIsActive] = useState(false);
 
@@ -73,7 +79,7 @@ const onSubmit = async (data) => {
         </div>
 
         <div className="form-container sign-in">
-          <form>
+          <form onSubmit={handleSubmit(onLogin)}>
             <h1 className="inverse">Sign In</h1>
             <div className="social-icons">
               <a href="https://www.google.com/" className="icon">
@@ -95,7 +101,10 @@ const onSubmit = async (data) => {
             <input type="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
             <Link to="/">
-              <button type="button">Sign In</button>
+              <button type="button">
+                Sign In
+              </button>
+              {login_error && <div className="error">{login_error}</div>}
             </Link>
           </form>
         </div>
