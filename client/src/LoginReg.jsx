@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import "./LoginReg.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link } from "react-router-dom";
-import axios from 'axios'
+import { useSignup } from "./components/hooks/useSignup.jsx";
 
 function LoginReg() {
   const {
@@ -13,21 +13,10 @@ function LoginReg() {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const { signup, error, isLoading } = useSignup()
+
 const onSubmit = async (data) => {
-  console.log("Submitting data:", data);
-  try {
-    const res = await axios.post('http://localhost:5000/api/user', data);
-    alert(res.data.message);
-    localStorage.setItem('token', res.data.token);
-    reset();
-  } catch (err) {
-    console.error("❌ Axios error:", err);
-  if (err.response) {
-    alert("Login failed: " + err.response.data.message);
-  } else {
-    alert("Login failed: Unknown error");
-  }
-  }
+  await signup(data.email, data.password)
 };
 
   const [isActive, setIsActive] = useState(false);
@@ -56,15 +45,15 @@ const onSubmit = async (data) => {
 
             <span>or use your email for registration</span>
             {isSubmitting && <div>Loading...</div>}
-            <input
+            {/* <input
               type="text"
               {...register("name", {
                 required: { value: true, message: "*This field is required" },
                 minLength: {value: 5, message: "*name should be 5 character!"},
               })}
               placeholder="name"
-            />
-            {errors.name && <div className="text-danger small">{errors.name.message}</div>}
+            /> */}
+            {/* {errors.name && <div className="text-danger small">{errors.name.message}</div>} */}
             <input type="email" {...register("email", {
               required: {value: true, message: "*This field is required"},
             })} placeholder="Email" />
@@ -79,6 +68,7 @@ const onSubmit = async (data) => {
             />
             {errors.password && <div className="text-danger small">{errors.password.message}</div>}
             <button disabled={isSubmitting} type="submit">Sign Up</button>
+            {error && <div className="error">{error}</div>}
           </form>
         </div>
 

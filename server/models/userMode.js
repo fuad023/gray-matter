@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
 import validator from "validator"
-import { useState } from "react";
 
 const Schema = mongoose.Schema
 const userSchema = new Schema({
@@ -16,7 +15,7 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.static.signup = async function(email, password) {
+userSchema.statics.signupUser = async function(email, password) {
 
     if(!email || !password) {
         throw Error("All fields must be field")
@@ -44,7 +43,7 @@ userSchema.static.signup = async function(email, password) {
     return user
 }
 
-userSchema.static.login = async function(email, password) {
+userSchema.statics.loginUser = async function(email, password) {
     if(!email || !password) {
         throw Error("All fields must be field")
     }
@@ -64,4 +63,4 @@ userSchema.static.login = async function(email, password) {
     return user
 }
 
-module.exports = mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema)
