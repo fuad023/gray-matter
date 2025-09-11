@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Sidebar from '../components/Sidebar'
+import Button from "react-bootstrap/esm/Button";
+import { useLogout } from "./hooks/useLogout";
 
 
 const Navbar = () => {
+  const { logout } = useLogout()
+  const handleClick = () => {
+    logout()
+  }
+
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -116,9 +123,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <Link className="dropdown-item" to="/login">
+                <Button className="dropdown-item" onClick={handleClick}>
                   Logout
-                </Link>
+                </Button>
               </li>
             </ul>
           </div>
