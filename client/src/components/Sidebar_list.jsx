@@ -17,7 +17,7 @@ function LinkedExample() {
             <span>Explore</span>
         </div>
       </ListGroup.Item>
-      <ListGroup.Item action href="#link2">
+      <ListGroup.Item action href="#link3">
         <div className='d-flex align-items-center'>
             <i class="bi bi-people-fill m-2"></i>
             <span>Community</span>

@@ -1,10 +1,23 @@
 import React from "react";
 import Post from './Post'
 import LinkedExample from "./Sidebar_list";
-import post1 from '../assets/post1.jpg'
-import post2 from '../assets/post2.jpg'
+import NewPost from "./NewPost";
+import CreatePost from './CreatePost'
+import { useState } from "react";
+import postMaterial from "./PostMaterial";
 
 const Home = () => {
+  const [posts, setPosts] = useState(postMaterial);
+  const [isVisible, setIsVisible] = useState(false)
+const addPost = (post) => {
+    setPosts(prevPosts => [post, ...prevPosts]);
+  };  
+
+  const deletePost = (post) => {
+    const newArray = posts.filter(item => item.id !== post);
+    setPosts(newArray)
+  }
+
   return (
     <>
       <div style={{ height: "70px" }}>This is home</div>
@@ -15,9 +28,11 @@ const Home = () => {
           <LinkedExample/>
         </div>
         <div className="flex-grow-1">
-          <Post image = {post1} isImage = "true"/>
-          <Post image = {post2} isImage = "true"/>
-          <Post image = "" isImage = "false"/>
+          {!isVisible && <NewPost setIsVisible={setIsVisible}/>}
+          {isVisible && <CreatePost setIsVisible={setIsVisible} addPost = {addPost}/> }
+          {posts.map((postInfo) => (
+            <Post key={postInfo.id} post = {postInfo} deletePost={deletePost}/>
+          ))}
         </div>
         <div className="d-none d-md-block border ms-4" style={{width: '200px'}}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis veritatis recusandae sunt nesciunt quidem adipisci repellendus facere nam amet voluptatem? Eos delectus animi dignissimos officiis rem possimus mollitia quod accusamus.
