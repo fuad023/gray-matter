@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../components/Sidebar'
 import Button from "react-bootstrap/esm/Button";
-import { useLogout } from "./hooks/useLogout";
+import { useLogout} from "./hooks/useLogout";
 
 
 const Navbar = () => {
   const { logout } = useLogout()
-  const handleClick = () => {
-    logout()
+  const navigate = useNavigate()
+  const handleClick = async () => {
+    await logout()
+    navigate('/login')
   }
 
   return (
