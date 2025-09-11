@@ -13,6 +13,11 @@ const addPost = (post) => {
     setPosts(prevPosts => [post, ...prevPosts]);
   };  
 
+  const deletePost = (post) => {
+    const newArray = posts.filter(item => item.id !== post);
+    setPosts(newArray)
+  }
+
   return (
     <>
       <div style={{ height: "70px" }}>This is home</div>
@@ -26,7 +31,7 @@ const addPost = (post) => {
           {!isVisible && <NewPost setIsVisible={setIsVisible}/>}
           {isVisible && <CreatePost setIsVisible={setIsVisible} addPost = {addPost}/> }
           {posts.map((postInfo) => (
-            <Post key={postInfo.id} post = {postInfo}/>
+            <Post key={postInfo.id} post = {postInfo} deletePost={deletePost}/>
           ))}
         </div>
         <div className="d-none d-md-block border ms-4" style={{width: '200px'}}>

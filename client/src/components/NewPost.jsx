@@ -22,7 +22,12 @@ function NewPost({setIsVisible}) {
           style={{ borderRadius: "20px", width: "400px" }}
           onClick={toggleVigibility}
         >
-          Share your ideas...
+          <span
+            className="ms-3"
+            style={{color:"rgba(0, 0, 0, 0.5)"}}
+          >
+            Share your idea...
+          </span>
         </button>
       </div>
     </div>
