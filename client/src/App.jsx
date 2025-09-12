@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./Profile/Profile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Route>
       </Routes>
