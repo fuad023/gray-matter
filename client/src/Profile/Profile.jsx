@@ -121,7 +121,8 @@ export default function Profile() {
   return (
     <div>
       {/* Banner */}
-      <img src="profile.png" alt="Banner" className="banner" />
+      {/* <img src="profile.png" alt="Banner" className="banner" /> */}
+      <div style={{ height: "70px" }}>This is home</div>
 
       <main className="container">
         {/* Header */}
