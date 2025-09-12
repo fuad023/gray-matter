@@ -1,34 +1,39 @@
-import User from "../models/User.js";
-import bcrypt from "bcrypt";
+import User from '../models/userMode.js'
+import jwt from "jsonwebtoken"
 
-export const getUser = async (req, res) => {
+const createToken = (_id) => {
+  return jwt.sign({_id}, process.env.GRAY_CODE, {expiresIn: '5d'})
+}
+
+const loginUser = async (req, res) => {
+  const {email, password} = req.body
+
   try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    const user = await User.loginUser(email, password)
 
-export const postUser = async (req, res) => {
-  console.log("➡️ Received body:", req.body);
+    const token = createToken(user._id)
+
+    res.status(200).json({email, token})
+  } catch(error) {
+     res.status(400).json({error: error.message})
+  }
+
+}
+
+const signupUser = async (req, res) => {
+  const {email, password} = req.body
+
   try {
-    const { name, email, password } = req.body;
-        
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already registered" });
-    }
+    const user = await User.signupUser(email, password)
 
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const token = createToken(user._id)
 
-    // ✅ Create and save user
-    const user = new User({ name, email, password: hashedPassword });
-
-    await user.save();
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(200).json({email, token})
+  } catch(error) {
+     res.status(400).json({error: error.message})
   }
-};
+
+}
+
+export {loginUser, signupUser}
+

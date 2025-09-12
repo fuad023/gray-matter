@@ -1,9 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../components/Sidebar'
+import Button from "react-bootstrap/esm/Button";
+import { useLogout} from "./hooks/useLogout";
 
 
 const Navbar = () => {
+  const { logout } = useLogout()
+  const navigate = useNavigate()
+  const handleClick = async () => {
+    await logout()
+    navigate('/login')
+  }
+
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -106,9 +115,9 @@ const Navbar = () => {
               aria-labelledby="dropdownMenuButton2"
             >
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="/profile">
                   Profile
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="dropdown-item" href="#">
@@ -116,9 +125,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <Link className="dropdown-item" to="/login">
+                <Button className="dropdown-item" onClick={handleClick}>
                   Logout
-                </Link>
+                </Button>
               </li>
             </ul>
           </div>
