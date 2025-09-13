@@ -1,16 +1,16 @@
-import User from "../models/userModel.js";
+import UserModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.GRAY_CODE, { expiresIn: "3d" });
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
 // login a user
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.login(email, password);
+    const user = await UserModel.login(email, password);
 
     // create a token
     const token = createToken(user._id);
@@ -22,11 +22,11 @@ const loginUser = async (req, res) => {
 };
 
 // signup a user
-const signupUser = async (req, res) => {
+export const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.signup(email, password);
+    const user = await UserModel.signup(email, password);
 
     // create a token
     const token = createToken(user._id);
@@ -36,5 +36,3 @@ const signupUser = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-export { loginUser, signupUser };
