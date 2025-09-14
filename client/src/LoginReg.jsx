@@ -25,7 +25,6 @@ const {
   const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
 
   const onSubmit = async (data) => {
-    console.log(data);
     await signup(data.name, data.surname, data.email, data.password);
   };
 

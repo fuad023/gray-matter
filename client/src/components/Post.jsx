@@ -19,7 +19,7 @@ function Post({post, deletePost}) {
           />
           <div>
             <div className="fw-bold">{post.tittle}</div>
-            {/* <div style={{ fontSize: "15px" }}>{post.timeStamp}</div> */}
+            <div style={{ fontSize: "15px" }}>{post.createdAt}</div>
           </div>
           <div className="ms-auto">
             <div className="dropdown">
