@@ -25,7 +25,7 @@ function CreatePost({ setIsVisible, addPost }) {
       return;
     }
     try {
-      const response = await fetch("http://localhost:4000/api/posts", {
+      const response = await fetch("http://localhost:4000/api/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

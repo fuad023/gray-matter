@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await fetch("http://localhost:4000/api/posts", {
+      const response = await fetch("http://localhost:4000/api/post", {
         headers: {
           Authorization: user ? `Bearer ${user.token}` : '',
           "Content-Type": "application/json",
