@@ -1,8 +1,12 @@
+
 import React, { useState } from "react";
+import { useAuthContext } from "./hooks/useAuthContext.jsx";
 
 function CreatePost({ setIsVisible, addPost }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [userCaption, setUserCaption] = useState("");
+  const [error, setError] = useState(null);
+  const { user } = useAuthContext();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -14,9 +18,34 @@ function CreatePost({ setIsVisible, addPost }) {
     setIsVisible((prev) => !prev);
   };
 
-  const handlePost = (post) => {
-    addPost(post);
-    toggleVigibility();
+  const handlePost = async () => {
+    setError(null);
+    if (!user) {
+      setError("You must be logged in to create a post.");
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:4000/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          title: "Untitled Post",
+          content: userCaption,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || "Failed to create post");
+      } else {
+        addPost(data);
+        toggleVigibility();
+      }
+    } catch (err) {
+      setError("Network error");
+    }
   };
 
   const isValid = userCaption.trim().length > 0;
@@ -41,7 +70,7 @@ function CreatePost({ setIsVisible, addPost }) {
           className="form-control"
           style={{ maxWidth: "400px", height: "auto" }}
           placeholder="Description"
-          required = 'true'
+          required={true}
           onChange={(e) => setUserCaption(e.target.value)}
         />
       </div>
@@ -71,20 +100,12 @@ function CreatePost({ setIsVisible, addPost }) {
           </div>
         )}
       </div>
+      {error && <div className="error text-danger small">{error}</div>}
       <div className="d-flex justify-content-center m-3 gap-4 bg-dark p-3 rounded">
         <button
           className="border rounded"
-          disabled = {!isValid}
-          onClick={() =>
-            handlePost({
-              id: Date.now().toString(),
-              userName: "Sajid AL Amin",
-              hasImage: selectedImage,
-              image: selectedImage,
-              caption: userCaption,
-              timeStamp: "2h ago",
-            })
-          }
+          disabled={!isValid}
+          onClick={handlePost}
         >
           Post
         </button>

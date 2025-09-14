@@ -22,7 +22,7 @@ const {
 } = useForm();
 
   const { signup, error, isLoading } = useSignup();
-  const { login, login_error, login_isLoading } = useLogin();
+  const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
 
   const onSubmit = async (data) => {
     await signup(data.email, data.password);
@@ -144,7 +144,7 @@ const {
 
             <a href="#">Forgot your password?</a>
             <button type="submit" disabled = {isSubmittingSignin}>Sign In</button>
-            {login_error && <div className="error">{login_error}</div>}
+            {loginError && <div className="error">{loginError}</div>}
           </form>
         </div>
 
