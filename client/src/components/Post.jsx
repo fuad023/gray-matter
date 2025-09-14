@@ -20,6 +20,7 @@ function Post({post, deletePost}) {
           <div>
             <div className="fw-bold">{post.author_id.name + " " + post.author_id.surname}</div>
             <div style={{ fontSize: "15px" }}>{post.createdAt}</div>
+            <div className="fw-bold">{post.title}</div>
           </div>
           <div className="ms-auto">
             <div className="dropdown">
