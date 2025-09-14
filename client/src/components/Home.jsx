@@ -29,14 +29,23 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+const deletePost = async (postId) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const response = await fetch(`http://localhost:4000/api/post/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: user ? `Bearer ${user.token}` : '',
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    setPosts(posts => posts.filter(post => post._id !== postId));
+  }
+};
+
 const addPost = (post) => {
     setPosts(prevPosts => [post, ...prevPosts]);
   };  
-
-  const deletePost = (post) => {
-    const newArray = posts.filter(item => item.id !== post);
-    setPosts(newArray)
-  }
 
   return (
     <>
@@ -51,7 +60,7 @@ const addPost = (post) => {
           {!isVisible && <NewPost setIsVisible={setIsVisible}/>}
           {isVisible && <CreatePost setIsVisible={setIsVisible} addPost = {addPost}/> }
           {posts.map((postInfo) => (
-            <Post key={postInfo.id} post = {postInfo} deletePost={deletePost}/>
+            <Post key={postInfo._id || postInfo.id} post={postInfo} deletePost={deletePost} />
           ))}
         </div>
         <div className="d-none d-md-block border ms-4" style={{width: '200px'}}>

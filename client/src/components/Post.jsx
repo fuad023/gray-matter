@@ -2,8 +2,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 function Post({post, deletePost}) {
 
-  const remove = (post) => {
-    deletePost(post);
+  const remove = (postId) => {
+    deletePost(postId);
   }
 
   return (
@@ -34,9 +34,9 @@ function Post({post, deletePost}) {
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                  {/* <button className="dropdown-item" onClick={() => {remove(post.id)}}>
+                  <button className="dropdown-item" onClick={() => remove(post._id)}>
                     Delete Post
-                  </button> */}
+                  </button>
                 </li>
               </ul>
             </div>
