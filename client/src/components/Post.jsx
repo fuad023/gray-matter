@@ -1,11 +1,15 @@
+
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { format } from 'date-fns';
+import { useState } from 'react';
+
 
 function Post({ post, deletePost }) {
+  const [showFull, setShowFull] = useState(false);
+  const CAPTION_LIMIT = 120;
   const remove = (postId) => {
     deletePost(postId);
   };
-
   return (
     <div className=" mx-auto rounded mb-3" style={{ width: "600px" }}>
       <div className="border rounded">
@@ -53,7 +57,17 @@ function Post({ post, deletePost }) {
             </div>
           </div>
         </div>
-        <div className="m-2">{post.content}</div>
+        <div className="m-2">
+          {post.content && post.content.length > CAPTION_LIMIT && !showFull ? (
+            <>
+              {post.content.slice(0, CAPTION_LIMIT)}...
+              <button className="btn btn-link p-0 ms-1" style={{fontSize: '1em'}} onClick={() => setShowFull(true)}>see more</button>
+            </>
+          ) : post.content}
+          {post.content && post.content.length > CAPTION_LIMIT && showFull && (
+            <button className="btn btn-link p-0 ms-1 border border-0 bg-transparent" style={{fontSize: '1em'}} onClick={() => setShowFull(false)}>see less</button>
+          )}
+        </div>
         {post.hasImage && (
           <div style={{ width: "600px" }}>
             <img
