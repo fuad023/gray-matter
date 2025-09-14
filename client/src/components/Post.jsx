@@ -1,10 +1,10 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { format } from 'date-fns';
 
-function Post({post, deletePost}) {
-
+function Post({ post, deletePost }) {
   const remove = (postId) => {
     deletePost(postId);
-  }
+  };
 
   return (
     <div className=" mx-auto rounded mb-3" style={{ width: "600px" }}>
@@ -18,8 +18,12 @@ function Post({post, deletePost}) {
             height="45"
           />
           <div>
-            <div className="fw-bold">{post.author_id.name + " " + post.author_id.surname}</div>
-            <div style={{ fontSize: "15px" }}>{post.createdAt}</div>
+            <div className="fw-bold">
+              {post.author_id.name + " " + post.author_id.surname}
+            </div>
+            <div style={{ fontSize: "15px" }}>
+              {post.createdAt ? format(new Date(post.createdAt), "PP p") : ""}
+            </div>
             <div className="fw-bold">{post.title}</div>
           </div>
           <div className="ms-auto">
@@ -33,9 +37,15 @@ function Post({post, deletePost}) {
               >
                 <i className="bi bi-ui-radios-grid text-dark"></i>
               </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton1"
+              >
                 <li>
-                  <button className="dropdown-item" onClick={() => remove(post._id)}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => remove(post._id)}
+                  >
                     Delete Post
                   </button>
                 </li>

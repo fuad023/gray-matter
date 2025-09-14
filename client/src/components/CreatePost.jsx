@@ -32,6 +32,7 @@ function CreatePost({ setIsVisible, addPost }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
+        
         body: JSON.stringify({
           title: userTile,
           content: userCaption,
