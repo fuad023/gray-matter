@@ -3,13 +3,13 @@ import Post from "../models/postModel.js";
 
 // get all likes for a post
 export const getLikes = async (req, res) => {
-  const { id } = req.params;
+  const { post_id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: "No such post" });
   }
 
-  const post = await Post.findById(id).populate("likes", "name surname");
+  const post = await Post.findById(post_id).populate("likes", "name surname");
   if (!post) {
     return res.status(404).json({ error: "No such post" });
   }
@@ -19,14 +19,14 @@ export const getLikes = async (req, res) => {
 
 // like a post
 export const likePost = async (req, res) => {
-  const { id } = req.params;
+  const { post_id } = req.params;
   const user_id = req.user._id;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: "No such post" });
   }
 
-  const post = await Post.findById(id);
+  const post = await Post.findById(post_id);
   if (!post) {
     return res.status(404).json({ error: "No such post" });
   }
@@ -42,10 +42,10 @@ export const likePost = async (req, res) => {
 
 // unlike a post
 export const unlikePost = async (req, res) => {
-  const { postId, userId } = req.params;
+  const { post_id, userId } = req.params;
   const user_id = req.user._id;
 
-  if (!mongoose.Types.ObjectId.isValid(postId)) {
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: "No such post" });
   }
 
@@ -53,7 +53,7 @@ export const unlikePost = async (req, res) => {
     return res.status(403).json({ error: "Unauthorized action" });
   }
 
-  const post = await Post.findById(postId);
+  const post = await Post.findById(post_id);
   if (!post) {
     return res.status(404).json({ error: "No such post" });
   }
