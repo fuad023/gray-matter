@@ -13,12 +13,12 @@ const router = express.Router();
 router.use(requireAuth);
 
 // GET all likes for a post
-router.get("/:postId", getLikes);
+router.get("/:post_id", getLikes);
 
 // POST like a post
-router.post("/:postId", likePost);
+router.post("/:post_id", likePost);
 
 // DELETE unlike a post
-router.delete("/:postId/:userId", unlikePost);
+router.delete("/:post_id/:user_id", unlikePost);
 
 export default router;
