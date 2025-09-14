@@ -45,7 +45,7 @@ const deletePost = async (postId) => {
 
 const addPost = (post) => {
     setPosts(prevPosts => [post, ...prevPosts]);
-  };  
+  };
 
   return (
     <>
