@@ -18,8 +18,8 @@ function Post({post, deletePost}) {
             height="45"
           />
           <div>
-            <div className="fw-bold">{post.userName}</div>
-            <div style={{ fontSize: "15px" }}>{post.timeStamp}</div>
+            <div className="fw-bold">{post.tittle}</div>
+            {/* <div style={{ fontSize: "15px" }}>{post.timeStamp}</div> */}
           </div>
           <div className="ms-auto">
             <div className="dropdown">
@@ -34,15 +34,15 @@ function Post({post, deletePost}) {
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                  <button className="dropdown-item" onClick={() => {remove(post.id)}}>
+                  {/* <button className="dropdown-item" onClick={() => {remove(post.id)}}>
                     Delete Post
-                  </button>
+                  </button> */}
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div className="m-2">{post.caption}</div>
+        <div className="m-2">{post.content}</div>
         {post.hasImage && (
           <div style={{ width: "600px" }}>
             <img
