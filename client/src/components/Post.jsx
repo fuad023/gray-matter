@@ -61,7 +61,7 @@ function Post({ post, deletePost }) {
           {post.content && post.content.length > CAPTION_LIMIT && !showFull ? (
             <>
               {post.content.slice(0, CAPTION_LIMIT)}...
-              <button className="btn btn-link p-0 ms-1" style={{fontSize: '1em'}} onClick={() => setShowFull(true)}>see more</button>
+              <button className="btn btn-link p-0 ms-1 border border-0 bg-transparent" style={{fontSize: '1em'}} onClick={() => setShowFull(true)}>see more</button>
             </>
           ) : post.content}
           {post.content && post.content.length > CAPTION_LIMIT && showFull && (
