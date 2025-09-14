@@ -34,7 +34,7 @@ userSchema.statics.signup = async function (name, surname, email, password) {
   const hash = await bcrypt.hash(password, salt);
 
   // save doc on database
-  const user = await this.create({name, surname, email, password: hash });
+  const user = await this.create({ name, surname, email, password: hash });
   return user;
 };
 
