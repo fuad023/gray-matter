@@ -18,7 +18,7 @@ function Post({post, deletePost}) {
             height="45"
           />
           <div>
-            <div className="fw-bold">{post.tittle}</div>
+            <div className="fw-bold">{post.author_id.name + " " + post.author_id.surname}</div>
             <div style={{ fontSize: "15px" }}>{post.createdAt}</div>
           </div>
           <div className="ms-auto">
