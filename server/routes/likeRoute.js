@@ -1,12 +1,13 @@
-import { Router } from "express";
-import { requireAuth } from "../middleware/requireAuth.js";
+import express from "express";
+import requireAuth from "../middleware/requireAuth.js";
 
 import {
     getLikes,
     likePost,
     unlikePost
 } from "../controllers/likeControllers.js";
-const router = Router();
+
+const router = express.Router();
 
 // require auth for all like routes
 router.use(requireAuth);
