@@ -65,7 +65,9 @@ function CreatePost({ setIsVisible, addPost }) {
         className="d-flex align-items-center gap-3 m-2"
         style={{ height: "auto" }}
       >
-        <span>Add a title</span>
+        <span
+          className="pe-4"
+          >Add a title</span>
         <input
           type="text"
           className="form-control"
