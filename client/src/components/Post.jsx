@@ -5,30 +5,35 @@ import { use, useState } from 'react';
 
 
 function Post({ post, deletePost }) {
+  const currentUser = "68c8749c9d5f8fb050cd5f1f";
   const [showFull, setShowFull] = useState(false);
+  const [likes, setLikes] = useState(post.likes?.length || 0);
+  const [liked, setLiked] = useState(post.likes?.includes(currentUser));
+
   const CAPTION_LIMIT = 120;
   const remove = (postId) => {
     deletePost(postId);
   };
 
-  // const handleLike = async () => {
-  //   try {
-  //     const user = JSON.parse(localStorage.getItem('user'));
-  //     const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
-  //       method: "PATCH",
-  //       headers: {
-  //         Authorization: user ? `Bearer ${user.token}` : '',
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     const data = await res.json();
-  //     
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   const handleLike = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: user ? `Bearer ${user.token}` : '',
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      setLikes(data.likes.length);
+      setLiked(data.likes?.includes(currentUser));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleUnLike = async () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'));
       const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
@@ -39,6 +44,8 @@ function Post({ post, deletePost }) {
         },
       });
       const data = await res.json();
+      setLikes(data.likes.length);
+      setLiked(data.likes?.includes(currentUser));
     } catch (err) {
       console.error(err);
     }
@@ -114,9 +121,10 @@ function Post({ post, deletePost }) {
         )}
         <hr />
         <div className="d-flex align-items-center justify-content-center gap-5 m-2">
-          <button className="mx-6 rounded border" onClick={handleLike}>
-            <i className="bi bi-hand-thumbs-up me-2"></i>
+          <button className="d-flex mx-6 rounded border gap-3" onClick={liked ? handleUnLike : handleLike}>
+            <i className= {liked ? "bi bi-hand-thumbs-up-fill" : "bi bi-hand-thumbs-up me-2"}></i>
             <span>Like</span>
+            <span>{likes}</span>
           </button>
           <button className="mx-5 rounded border">
             <i className="bi bi-chat me-2"></i>
