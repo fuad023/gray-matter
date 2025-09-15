@@ -5,17 +5,17 @@ import { useEffect } from "react";
 import Comment from "./Comment";
 
 function Post({ post, deletePost }) {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const currentUser = "68c8749c9d5f8fb050cd5f1f";
+  const user = JSON.parse(localStorage.getItem("user"));
   const [showFull, setShowFull] = useState(false);
   const [likes, setLikes] = useState(post.likes?.length || 0);
   const [liked, setLiked] = useState(post.likes?.includes(currentUser));
   const [isCommenting, setIsCommenting] = useState(false);
   const [comments, setComments] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
   const [newComment, setNewComment] = useState("");
 
   const submitComment = async () => {
-    if (!newComment.trim()) return; // don't submit empty comments
+    if (!newComment.trim()) return;
     try {
       const res = await fetch(
         `http://localhost:4000/api/comments/${post._id}`,
@@ -29,9 +29,8 @@ function Post({ post, deletePost }) {
         }
       );
       const data = await res.json();
-      // Update comments array immediately
       setComments([...comments, data]);
-      setNewComment(""); // clear input
+      setNewComment("");
     } catch (err) {
       console.error("Failed to add comment:", err);
     }
@@ -61,7 +60,6 @@ function Post({ post, deletePost }) {
       });
       const data = await res.json();
       setLikes(data.likes.length);
-      // setLiked(data.likes?.includes(currentUser));
       toggleLike();
     } catch (err) {
       console.error(err);
@@ -79,7 +77,6 @@ function Post({ post, deletePost }) {
       });
       const data = await res.json();
       setLikes(data.likes.length);
-      // setLiked(data.likes?.includes(currentUser));
       toggleLike();
     } catch (err) {
       console.error(err);
@@ -231,7 +228,7 @@ function Post({ post, deletePost }) {
                   style={{ width: "350px", height: "40px" }}
                   type="text"
                   placeholder="Write a comment here"
-                  value={newComment} // bind input value to state
+                  value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                 />
                 <button
@@ -242,8 +239,8 @@ function Post({ post, deletePost }) {
                 </button>
               </div>
               <div>
-                {comments.map((comment) => (
-                  <Comment key={comment._id} comment={comment} />
+                {comments.map((comment, index) => (
+                  <Comment key={comment._id || index} comment={comment} />
                 ))}
               </div>
             </div>
