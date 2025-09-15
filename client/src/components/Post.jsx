@@ -1,7 +1,7 @@
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 
 function Post({ post, deletePost }) {
@@ -10,6 +10,40 @@ function Post({ post, deletePost }) {
   const remove = (postId) => {
     deletePost(postId);
   };
+
+  // const handleLike = async () => {
+  //   try {
+  //     const user = JSON.parse(localStorage.getItem('user'));
+  //     const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
+  //       method: "PATCH",
+  //       headers: {
+  //         Authorization: user ? `Bearer ${user.token}` : '',
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const data = await res.json();
+  //     
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  const handleLike = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: user ? `Bearer ${user.token}` : '',
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className=" mx-auto rounded mb-3" style={{ width: "600px" }}>
       <div className="border rounded">
@@ -80,7 +114,7 @@ function Post({ post, deletePost }) {
         )}
         <hr />
         <div className="d-flex align-items-center justify-content-center gap-5 m-2">
-          <button className="mx-6 rounded border">
+          <button className="mx-6 rounded border" onClick={handleLike}>
             <i className="bi bi-hand-thumbs-up me-2"></i>
             <span>Like</span>
           </button>
