@@ -1,11 +1,15 @@
+
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { format } from 'date-fns';
+import { useState } from 'react';
 
-function Post({post, deletePost}) {
 
-  const remove = (post) => {
-    deletePost(post);
-  }
-
+function Post({ post, deletePost }) {
+  const [showFull, setShowFull] = useState(false);
+  const CAPTION_LIMIT = 120;
+  const remove = (postId) => {
+    deletePost(postId);
+  };
   return (
     <div className=" mx-auto rounded mb-3" style={{ width: "600px" }}>
       <div className="border rounded">
@@ -18,8 +22,13 @@ function Post({post, deletePost}) {
             height="45"
           />
           <div>
-            <div className="fw-bold">{post.userName}</div>
-            <div style={{ fontSize: "15px" }}>{post.timeStamp}</div>
+            <div className="fw-bold">
+              {post.author_id.name + " " + post.author_id.surname}
+            </div>
+            <div style={{ fontSize: "15px" }}>
+              {post.createdAt ? format(new Date(post.createdAt), "PP p") : ""}
+            </div>
+            <div className="fw-bold">{post.title}</div>
           </div>
           <div className="ms-auto">
             <div className="dropdown">
@@ -32,9 +41,15 @@ function Post({post, deletePost}) {
               >
                 <i className="bi bi-ui-radios-grid text-dark"></i>
               </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton1"
+              >
                 <li>
-                  <button className="dropdown-item" onClick={() => {remove(post.id)}}>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => remove(post._id)}
+                  >
                     Delete Post
                   </button>
                 </li>
@@ -42,7 +57,17 @@ function Post({post, deletePost}) {
             </div>
           </div>
         </div>
-        <div className="m-2">{post.caption}</div>
+        <div className="m-2">
+          {post.content && post.content.length > CAPTION_LIMIT && !showFull ? (
+            <>
+              {post.content.slice(0, CAPTION_LIMIT)}...
+              <button className="btn btn-link p-0 ms-1 border border-0 bg-transparent" style={{fontSize: '1em'}} onClick={() => setShowFull(true)}>see more</button>
+            </>
+          ) : post.content}
+          {post.content && post.content.length > CAPTION_LIMIT && showFull && (
+            <button className="btn btn-link p-0 ms-1 border border-0 bg-transparent" style={{fontSize: '1em'}} onClick={() => setShowFull(false)}>see less</button>
+          )}
+        </div>
         {post.hasImage && (
           <div style={{ width: "600px" }}>
             <img

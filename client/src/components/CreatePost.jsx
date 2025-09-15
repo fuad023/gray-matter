@@ -4,6 +4,7 @@ import { useAuthContext } from "./hooks/useAuthContext.jsx";
 
 function CreatePost({ setIsVisible, addPost }) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [userTile, setUserTile] = useState("");
   const [userCaption, setUserCaption] = useState("");
   const [error, setError] = useState(null);
   const { user } = useAuthContext();
@@ -25,14 +26,15 @@ function CreatePost({ setIsVisible, addPost }) {
       return;
     }
     try {
-      const response = await fetch("http://localhost:4000/api/posts", {
+      const response = await fetch("http://localhost:4000/api/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
+        
         body: JSON.stringify({
-          title: "Untitled Post",
+          title: userTile,
           content: userCaption,
         }),
       });
@@ -60,6 +62,23 @@ function CreatePost({ setIsVisible, addPost }) {
         maxHeight: "700px",
       }}
     >
+      <div
+        className="d-flex align-items-center gap-3 m-2"
+        style={{ height: "auto" }}
+      >
+        <span
+          className="pe-4"
+          >Add a title</span>
+        <input
+          type="text"
+          className="form-control"
+          style={{ maxWidth: "400px", height: "auto" }}
+          placeholder="Title"
+          required={true}
+          onChange={(e) => setUserTile(e.target.value)}
+        />
+      </div>
+      <hr />
       <div
         className="d-flex align-items-center gap-3 m-2"
         style={{ height: "auto" }}

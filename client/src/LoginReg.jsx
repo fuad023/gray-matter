@@ -25,10 +25,11 @@ const {
   const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
 
   const onSubmit = async (data) => {
-    await signup(data.email, data.password);
+    await signup(data.name, data.surname, data.email, data.password);
   };
 
   const onLogin = async (data) => {
+    
     await login(data.email, data.password);
   };
 
@@ -57,15 +58,24 @@ const {
 
             <span>or use your email for registration</span>
             {isSubmittingSignup && <div>Loading...</div>}
-            {/* <input
+            <input
               type="text"
-              {...register("name", {
+              {...registerSignup("name", {
                 required: { value: true, message: "*This field is required" },
-                minLength: {value: 5, message: "*name should be 5 character!"},
+                
               })}
-              placeholder="name"
-            /> */}
-            {/* {errors.name && <div className="text-danger small">{errors.name.message}</div>} */}
+              placeholder="Name"
+            />
+            {errorsSignup.name && <div className="text-danger small">{errorsSignup.name.message}</div>}
+            <input
+              type="text"
+              {...registerSignup("surname", {
+                required: { value: true, message: "*This field is required" },
+               
+              })}
+              placeholder="Surname"
+            />
+            {errorsSignup.surname && <div className="text-danger small">{errorsSignup.surname.message}</div>}
             <input
               type="email"
               {...registerSignup("email", {

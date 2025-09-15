@@ -3,9 +3,7 @@ import Post from "../models/postModel.js";
 
 // get all posts
 export const getPosts = async (req, res) => {
-  const author_id = req.user._id;
-  const posts = await Post.find({ author_id }).sort({ createdAt: -1 });
-  console.log(author_id, posts);
+  const posts = await Post.find().sort({ createdAt: -1 }).populate("author_id", "name surname");
   res.status(200).json(posts);
 };
 

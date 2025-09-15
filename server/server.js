@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRoutes from "./routes/userRoute.js";
 import postRoutes from "./routes/postRoute.js";
+import likeRoutes from "./routes/likeRoute.js";
 
 // express app
 const app = express();
@@ -21,7 +22,8 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/user", userRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/post", postRoutes);
+app.use("/api/likes", likeRoutes);
 
 // connect to db
 mongoose
