@@ -5,10 +5,10 @@ import { use, useState } from 'react';
 
 
 function Post({ post, deletePost }) {
-  const currentUser = "68c8749c9d5f8fb050cd5f1f";
+  const user = JSON.parse(localStorage.getItem('user'));
   const [showFull, setShowFull] = useState(false);
   const [likes, setLikes] = useState(post.likes?.length || 0);
-  const [liked, setLiked] = useState(post.likes?.includes(currentUser));
+  const [liked, setLiked] = useState(post.likes?.includes(user._id));
 
   const CAPTION_LIMIT = 120;
   const remove = (postId) => {
@@ -17,7 +17,6 @@ function Post({ post, deletePost }) {
 
   const handleLike = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem('user'));
       const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
         method: "PATCH",
         headers: {
@@ -27,7 +26,7 @@ function Post({ post, deletePost }) {
       });
       const data = await res.json();
       setLikes(data.likes.length);
-      setLiked(data.likes?.includes(currentUser));
+      setLiked(data.likes?.includes(user._id));
     } catch (err) {
       console.error(err);
     }
@@ -45,7 +44,7 @@ function Post({ post, deletePost }) {
       });
       const data = await res.json();
       setLikes(data.likes.length);
-      setLiked(data.likes?.includes(currentUser));
+      setLiked(data.likes?.includes(user._id));
     } catch (err) {
       console.error(err);
     }
