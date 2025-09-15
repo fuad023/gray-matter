@@ -38,7 +38,7 @@ export const addComment = async (req, res) => {
   post.comments.push({ author_id: user_id, comment });
   await post.save();
 
-  res.status(200).json(post);
+  res.status(200).json({ message: "Comment added!", post });
 };
 
 // delete a comment from a post
@@ -46,6 +46,7 @@ export const deleteComment = async (req, res) => {
   const { post_id, comment_id } = req.params;
   const user_id = req.user._id;
 
+  // validate IDs
   if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: "No such post" });
   }
@@ -53,22 +54,26 @@ export const deleteComment = async (req, res) => {
     return res.status(404).json({ error: "No such comment" });
   }
 
+  // find the post
   const post = await Post.findById(post_id);
   if (!post) {
     return res.status(404).json({ error: "No such post" });
   }
 
+  // find the comment
   const comment = post.comments.id(comment_id);
   if (!comment) {
     return res.status(404).json({ error: "No such comment" });
   }
 
+  // check ownership
   if (comment.author_id.toString() !== user_id.toString()) {
     return res.status(403).json({ error: "Not authorized to delete this comment" });
   }
 
-  comment.remove();
+  // remove comment
+  post.comments.pull(comment_id);
   await post.save();
 
-  res.status(200).json(post);
+  res.status(200).json({ message: "Comment deleted!", post });
 };
