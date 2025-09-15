@@ -42,15 +42,11 @@ export const likePost = async (req, res) => {
 
 // unlike a post
 export const unlikePost = async (req, res) => {
-  const { post_id, userId } = req.params;
+  const { post_id } = req.params;
   const user_id = req.user._id;
 
   if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: "No such post" });
-  }
-
-  if (user_id.toString() !== userId) {
-    return res.status(403).json({ error: "Unauthorized action" });
   }
 
   const post = await Post.findById(post_id);
@@ -63,9 +59,9 @@ export const unlikePost = async (req, res) => {
   }
 
   post.likes = post.likes.filter(
-    (like) => like.toString() !== user_id.toString()
+    (id) => id.toString() !== user_id.toString()
   );
-  
+
   await post.save();
   res.status(200).json(post);
 };

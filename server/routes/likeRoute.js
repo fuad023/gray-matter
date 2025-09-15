@@ -16,9 +16,9 @@ router.use(requireAuth);
 router.get("/:post_id", getLikes);
 
 // POST like a post
-router.post("/:post_id", likePost);
+router.patch("/:post_id", likePost);
 
 // DELETE unlike a post
-router.delete("/:post_id/:user_id", unlikePost);
+router.delete("/:post_id", unlikePost);
 
 export default router;
