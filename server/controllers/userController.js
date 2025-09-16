@@ -5,10 +5,24 @@ import User from "../models/userModel.js";
 export const getUsers = async (req, res) => {
   const users = await User.aggregate([
     { $sort: { createdAt: -1 } },
-    { $project: { _id: 1, name: 1, surname: 1, username: 1, email: 1, follower_count: { $size: "$followers" } } }
+    { $project: { _id: 1, name: 1, surname: 1, username: 1, email: 1, follower_count: { $size: "$followers" } } },
+    { $sort: { createdAt: -1 } }
   ]);
+
   res.status(200).json(users);
 }
+
+// get users except whom current user follows
+export const getUsersExceptFollowing = async (req, res) => {
+  const currentUserId = req.user._id;
+  const users = await User.aggregate([
+    { $match: { _id: { $ne: currentUserId }, followers: { $ne: currentUserId } } }, // exclude current user and users whom current user follows
+    { $project: { _id: 1, name: 1, surname: 1, username: 1, email: 1, follower_count: { $size: "$followers" } } },
+    { $sort: { createdAt: -1 } }
+  ]);
+
+  res.status(200).json(users);
+};
 
 // get a user by _id
 export const getUser = async (req, res) => {
