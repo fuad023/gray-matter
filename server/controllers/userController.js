@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
   res.status(200).json(users);
 }
 
-// get a user by ID
+// get a user by _id
 export const getUser = async (req, res) => {
   const { id } = req.params;
 
