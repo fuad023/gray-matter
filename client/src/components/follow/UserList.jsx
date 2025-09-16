@@ -19,15 +19,19 @@ function UserList({ user }) {
       );
       const data = await response.json();
       if (response.ok) {
-        if (data.isFollowing) {
-          setIsFollowAccepted(true);
-        } else if (data.hasPendingRequest) {
-          if (data.outgoing) {
-            setSentRequest(true);
-          } else {
-            setReceivedRequest(true);
+          // Accepted follow
+          console.log(data);
+          if (!data.hasPendingRequest) {
+            setIsFollowAccepted(true);
+          } 
+          // Pending request
+          else if (data.hasPendingRequest) {
+            if (data.outgoing) {
+              setSentRequest(true);
+            } else {
+              setReceivedRequest(true);
+            }
           }
-        }
       }
     };
 
