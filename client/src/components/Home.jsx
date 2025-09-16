@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await fetch("http://localhost:4000/api/post", {
+      const response = await fetch("http://localhost:4000/api/posts", {
         headers: {
           Authorization: user ? `Bearer ${user.token}` : '',
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ const Home = () => {
 
 const deletePost = async (postId) => {
   const user = JSON.parse(localStorage.getItem('user'));
-  const response = await fetch(`http://localhost:4000/api/post/${postId}`, {
+  const response = await fetch(`http://localhost:4000/api/posts/${postId}`, {
     method: 'DELETE',
     headers: {
       Authorization: user ? `Bearer ${user.token}` : '',
