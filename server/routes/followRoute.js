@@ -1,7 +1,6 @@
 import express from "express";
 import requireAuth from "../middleware/authMiddleware.js";
-
-import { followUser, unfollowUser } from "../controllers/followController.js";
+import { followUser, acceptRequest, rejectRequest, cancelRequest, unfollowUser } from "../controllers/followController.js";
 
 const router = express.Router();
 
@@ -11,7 +10,14 @@ router.use(requireAuth);
 // POST follow a user
 router.post("/:recipient", followUser);
 
-// DELETE unfollow a user
-router.delete("/:recipient", unfollowUser);
+// PATCH accept a request
+router.patch("/accept/:requester", acceptRequest);
 
-export default router;
+// PATCH reject a request
+router.patch("/reject/:requester", rejectRequest)
+
+// PATCH cancel a request
+router.patch("/cancel/:requester", cancelRequest)
+
+// DELETE unfollow a user
+router.patch("/:requester", unfollowUser)

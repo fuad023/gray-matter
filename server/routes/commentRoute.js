@@ -11,7 +11,7 @@ router.use(requireAuth);
 // GET all comments for a post
 router.get('/:post_id', getComments);
 
-// POST add a comment to a post
+// PATCH add a comment to a post
 router.patch('/:post_id', addComment);
 
 // DELETE a comment from a post
