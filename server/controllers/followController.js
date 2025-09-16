@@ -102,3 +102,95 @@ export const unfollowUser = async (req, res) => {
 
   res.status(200).json(follow);
 };
+
+// get all followers of the logged-in user
+export const getFollowers = async (req, res) => {
+  const recipient = req.user._id;
+
+  try {
+    const followers = await Follow.find({ recipient, status: "accepted" })
+      .populate("requester", "name surname username email");
+
+    res.status(200).json(followers.map(f => f.requester));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// get all users the logged-in user is following
+export const getFollowing = async (req, res) => {
+  const requester = req.user._id;
+
+  try {
+    const following = await Follow.find({ requester, status: "accepted" })
+      .populate("recipient", "name surname username email");
+
+    res.status(200).json(following.map(f => f.recipient));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// get pending incoming requests (people who want to follow me)
+export const getIncomingRequests = async (req, res) => {
+  const recipient = req.user._id;
+
+  try {
+    const requests = await Follow.find({ recipient, status: "pending" })
+      .populate("requester", "name surname username email");
+
+    res.status(200).json(requests.map(r => r.requester));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// get pending outgoing requests (people I want to follow)
+export const getOutgoingRequests = async (req, res) => {
+  const requester = req.user._id;
+
+  try {
+    const requests = await Follow.find({ requester, status: "pending" })
+      .populate("recipient", "name surname username email");
+
+    res.status(200).json(requests.map(r => r.recipient));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// check if current user follows a given user
+export const isFollowing = async (req, res) => {
+  const requester = req.user._id;          // logged-in user
+  const { recipient } = req.params;        // target user id
+
+  if (!mongoose.Types.ObjectId.isValid(recipient)) {
+    return res.status(404).json({ error: "Invalid user id!" });
+  }
+
+  try {
+    const follow = await Follow.findOne({ requester, recipient, status: "accepted" });
+
+    res.status(200).json({ isFollowing: !!follow });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// check if given user follows the current user
+export const isFollowedBy = async (req, res) => {
+  const recipient = req.user._id;         // logged-in user
+  const { requester } = req.params;       // other user id
+
+  if (!mongoose.Types.ObjectId.isValid(requester)) {
+    return res.status(404).json({ error: "Invalid user id!" });
+  }
+
+  try {
+    const follow = await Follow.findOne({ requester, recipient, status: "accepted" });
+
+    res.status(200).json({ isFollowedBy: !!follow });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
