@@ -35,10 +35,13 @@ export const addComment = async (req, res) => {
     return res.status(400).json({ error: "Comment cannot be empty" });
   }
 
+
   post.comments.push({ author_id: user_id, comment });
   await post.save();
+  await post.populate("comments.author_id", "name surname");
+  const newComment = post.comments[post.comments.length - 1]
 
-  res.status(200).json({ message: "Comment added!", post });
+  res.status(200).json({newComment });
 };
 
 // delete a comment from a post

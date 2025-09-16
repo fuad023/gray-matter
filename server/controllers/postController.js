@@ -44,6 +44,7 @@ export const createPost = async (req, res) => {
   // add doc to db
   try {
     const post = await Post.create({ author_id, title, content });
+    await post.populate("author_id", "name surname");
     res.status(200).json(post);
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import Comment from "./Comment";
 
 function Post({ post, deletePost }) {
+  const currentUser = "68c8749c9d5f8fb050cd5f1f";
   const user = JSON.parse(localStorage.getItem("user"));
   const [showFull, setShowFull] = useState(false);
   const [likes, setLikes] = useState(post.likes?.length || 0);
-  const [liked, setLiked] = useState(post.likes?.includes(user._id));
+  const [liked, setLiked] = useState(post.likes?.includes(currentUser));
   const [isCommenting, setIsCommenting] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -28,7 +29,7 @@ function Post({ post, deletePost }) {
         }
       );
       const data = await res.json();
-      setComments([...comments, data]);
+      setComments([...comments, data.newComment]);
       setNewComment("");
     } catch (err) {
       console.error("Failed to add comment:", err);
