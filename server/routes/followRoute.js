@@ -14,8 +14,8 @@ router.use(requireAuth);
 router.post("/:recipient", followUser);
 router.patch("/accept/:requester", acceptRequest);
 router.patch("/reject/:requester", rejectRequest);
-router.delete("/cancel/:requester", cancelRequest);
-router.delete("/:requester", unfollowUser);
+router.delete("/cancel/:recipient", cancelRequest);
+router.delete("/:recipient", unfollowUser);
 
 router.get("/followers", getFollowers);
 router.get("/following", getFollowing);

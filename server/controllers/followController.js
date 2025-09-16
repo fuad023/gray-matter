@@ -204,6 +204,10 @@ export const hasPendingRequest = async (req, res) => {
     return res.status(404).json({ error: "Invalid user id!" });
   }
 
+  if (currentUser == user_id) {
+    return res.status(404).json({ error: "You cannot follow yourself!" });
+  }
+
   try {
     const outgoing = await Follow.findOne({ requester: currentUser, recipient: user_id, status: "pending" });
     const incoming = await Follow.findOne({ requester: user_id, recipient: currentUser, status: "pending" });
