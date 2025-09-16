@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import Comment from "./Comment";
 
 function Post({ post, deletePost }) {
-  const currentUser = "68c8749c9d5f8fb050cd5f1f";
   const user = JSON.parse(localStorage.getItem("user"));
+  const currentUser = user ? user._id : null;
   const [showFull, setShowFull] = useState(false);
   const [liking, setLiking] = useState(false);
   const [likes, setLikes] = useState(post.likes?.length || 0);
