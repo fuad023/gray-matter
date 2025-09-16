@@ -21,3 +21,5 @@ router.patch("/cancel/:requester", cancelRequest)
 
 // DELETE unfollow a user
 router.patch("/:requester", unfollowUser)
+
+export default router;
