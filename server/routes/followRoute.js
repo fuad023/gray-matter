@@ -24,6 +24,6 @@ router.get("/requests/outgoing", getOutgoingRequests);
 
 router.get("/is-following/:recipient", isFollowing);
 router.get("/followed-by/:requester", isFollowedBy);
-router.get("/is-pending/:recipient", hasPendingRequest);
+router.get("/is-pending/:user_id", hasPendingRequest);
 
 export default router;
