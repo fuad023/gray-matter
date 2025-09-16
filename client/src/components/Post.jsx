@@ -14,6 +14,7 @@ function Post({ post, deletePost }) {
   const [isCommenting, setIsCommenting] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const isMyPost = post?.author_id?._id === currentUser;
 
   const submitComment = async () => {
     if (!newComment.trim()) return;
@@ -151,9 +152,9 @@ function Post({ post, deletePost }) {
                 <li>
                   <button
                     className="dropdown-item"
-                    onClick={() => remove(post._id)}
+                    onClick={isMyPost ? () => remove(post._id) : () => {}}
                   >
-                    Delete Post
+                    {isMyPost ? "Delete Post" : "Report Post"}
                   </button>
                 </li>
               </ul>
