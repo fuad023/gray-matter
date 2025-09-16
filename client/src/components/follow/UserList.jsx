@@ -8,10 +8,10 @@ function UserList({ user }) {
 
     useEffect(() => {
         const fetchFollowing = async () => {
-          const user = JSON.parse(localStorage.getItem('user'));
+          const currentUser = JSON.parse(localStorage.getItem('user'));
           const response = await fetch(`http://localhost:4000/api/follow/is-pending/${user._id}`, {
             headers: {
-              Authorization: user ? `Bearer ${user.token}` : '',
+              Authorization: currentUser ? `Bearer ${currentUser.token}` : '',
               "Content-Type": "application/json",
             },
           });
