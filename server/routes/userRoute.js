@@ -15,3 +15,5 @@ router.get("/id/:id", getUser);
 
 // GET a user by username
 router.get("/username/:username", getUserByUsername);
+
+export default router;
