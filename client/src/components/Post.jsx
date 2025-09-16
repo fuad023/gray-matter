@@ -36,6 +36,10 @@ function Post({ post, deletePost }) {
     }
   };
 
+  const handleDeleteComment = (commentId) => {
+    setComments(comments.filter((c) => c._id !== commentId));
+  };
+
   const handleComment = () => {
     setIsCommenting(!isCommenting);
   };
@@ -203,7 +207,10 @@ function Post({ post, deletePost }) {
             <span>Like</span>
             <span>{likes}</span>
           </button>
-          <button className="d-flex mx-5 rounded border gap-1" onClick={handleComment}>
+          <button
+            className="d-flex mx-5 rounded border gap-1"
+            onClick={handleComment}
+          >
             <i className="bi bi-chat me-2"></i>
             <span>Comment</span>
             <span>{comments.length}</span>
@@ -219,7 +226,14 @@ function Post({ post, deletePost }) {
             <div>
               <div>
                 {comments.map((comment, index) => (
-                  <Comment key={comment._id || index} comment={comment} />
+                  <Comment
+                    key={comment._id || index}
+                    comment={comment}
+                    postId={post._id}
+                    userId={user._id}
+                    userToken={user.token}
+                    onDelete={handleDeleteComment}
+                  />
                 ))}
               </div>
               <div className="d-flex gap-3 align-items-center m-2">
