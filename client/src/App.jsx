@@ -9,6 +9,7 @@ import About from "./components/About";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./Profile/Profile";
+import Suggest from "./components/follow/Suggest";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/suggest" element={<Suggest />} />
           </Route>
         </Route>
       </Routes>
