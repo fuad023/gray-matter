@@ -221,10 +221,6 @@ function Post({ post, deletePost }) {
             <span>Comment</span>
             <span>{comments.length}</span>
           </button>
-          <button className="mx-6 rounded border">
-            <i className="bi bi-sign-turn-slight-right me-2"></i>
-            <span>Share</span>
-          </button>
         </div>
         {isCommenting && (
           <div className="m-2 mb-3">
