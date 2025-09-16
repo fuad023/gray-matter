@@ -6,8 +6,8 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "7d" });
 };
 
-// signup a user
-export const signup = async (req, res) => {
+// register a user
+export const register = async (req, res) => {
   const { name, surname, email, password } = req.body;
 
   try {
