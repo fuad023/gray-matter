@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Follow from "../models/followModel.js";
+import User from "../models/userModel.js";
 
 // follow a user
 export const followUser = async (req, res) => {
@@ -47,6 +48,8 @@ export const acceptRequest = async (req, res) => {
     return res.status(400).json({ error: "No pending follow request from this user" });
   }
 
+  await User.findByIdAndUpdate(recipient, { $addToSet: { followers: requester } }, { new: true });
+  await User.findByIdAndUpdate(requester, { $addToSet: { following: recipient } }, { new: true });
   res.status(200).json(follow);
 };
 
