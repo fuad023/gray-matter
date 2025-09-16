@@ -25,7 +25,7 @@ function LoginReg() {
   const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
 
   const onSubmit = async (data) => {
-    await signup(data.name, data.surname, data.email, data.password);
+    await signup(data.name, data.surname, data.username, data.email, data.password);
   };
 
   const onLogin = async (data) => {
