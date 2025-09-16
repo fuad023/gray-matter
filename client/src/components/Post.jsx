@@ -8,6 +8,7 @@ function Post({ post, deletePost }) {
   const currentUser = "68c8749c9d5f8fb050cd5f1f";
   const user = JSON.parse(localStorage.getItem("user"));
   const [showFull, setShowFull] = useState(false);
+  const [liking, setLiking] = useState(false);
   const [likes, setLikes] = useState(post.likes?.length || 0);
   const [liked, setLiked] = useState(post.likes?.includes(currentUser));
   const [isCommenting, setIsCommenting] = useState(false);
@@ -55,6 +56,7 @@ function Post({ post, deletePost }) {
 
   const handleLike = async () => {
     try {
+      setLiking(true);
       const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
         method: "PATCH",
         headers: {
@@ -65,6 +67,7 @@ function Post({ post, deletePost }) {
       const data = await res.json();
       setLikes(data.likes.length);
       toggleLike();
+      setLiking(false);
     } catch (err) {
       console.error(err);
     }
@@ -72,6 +75,7 @@ function Post({ post, deletePost }) {
 
   const handleUnLike = async () => {
     try {
+      setLiking(true);
       const res = await fetch(`http://localhost:4000/api/likes/${post._id}`, {
         method: "DELETE",
         headers: {
@@ -82,6 +86,7 @@ function Post({ post, deletePost }) {
       const data = await res.json();
       setLikes(data.likes.length);
       toggleLike();
+      setLiking(false);
     } catch (err) {
       console.error(err);
     }
@@ -99,7 +104,6 @@ function Post({ post, deletePost }) {
           }
         );
         const data = await res.json();
-        console.log("Fetched comments:", data);
         setComments(data);
       } catch (err) {
         console.error("Failed to fetch comments:", err);
@@ -196,6 +200,7 @@ function Post({ post, deletePost }) {
           <button
             className="d-flex mx-6 rounded border gap-3"
             onClick={liked ? handleUnLike : handleLike}
+            disabled={liking}
           >
             <i
               className={
