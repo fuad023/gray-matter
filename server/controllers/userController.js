@@ -15,12 +15,12 @@ export const getUser = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Invalid user ID" });
+    return res.status(404).json({ error: "Invalid user ID!" });
   }
 
-  const user = await User.findById(id).select("name surname email bio");
+  const user = await User.findById(id).select("-password");
   if (!user) {
-    return res.status(404).json({ error: "No such user" });
+    return res.status(404).json({ error: "No such user!" });
   }
 
   res.status(200).json(user);
@@ -29,20 +29,24 @@ export const getUser = async (req, res) => {
 // get user by username
 export const getUserByUsername = async (req, res) => {
   const { username } = req.params;
-
-  const user = await User.findOne({ username }).select("name surname email bio");
-  if (!user) {
-    return res.status(404).json({ error: "No such user" });
+  
+  const user = await User.aggregate([
+    { $match: { username } }, // filter like findOne({ username })
+    { $project: { name: 1, surname: 1, username: 1, email: 1, follower_count: { $size: "$followers" } } },
+    { $limit: 1 } // return only one document
+  ]);
+  if (!user[0]) {
+    return res.status(404).json({ error: "No such user!" });
   }
 
-  res.status(200).json(user);
+  res.status(200).json(user[0]);
 };
 
 // update a user
 export const updateUser = async (req, res) => {
   const { _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Invalid user ID" });
+    return res.status(404).json({ error: "Invalid user ID!" });
   }
   const { name, surname, email, bio } = req.body;
 
