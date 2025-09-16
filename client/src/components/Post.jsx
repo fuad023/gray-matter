@@ -203,9 +203,10 @@ function Post({ post, deletePost }) {
             <span>Like</span>
             <span>{likes}</span>
           </button>
-          <button className="mx-5 rounded border" onClick={handleComment}>
+          <button className="d-flex mx-5 rounded border gap-1" onClick={handleComment}>
             <i className="bi bi-chat me-2"></i>
             <span>Comment</span>
+            <span>{comments.length}</span>
           </button>
           <button className="mx-6 rounded border">
             <i className="bi bi-sign-turn-slight-right me-2"></i>
@@ -216,6 +217,11 @@ function Post({ post, deletePost }) {
           <div className="m-2 mb-3">
             <div>All Comments:</div>
             <div>
+              <div>
+                {comments.map((comment, index) => (
+                  <Comment key={comment._id || index} comment={comment} />
+                ))}
+              </div>
               <div className="d-flex gap-3 align-items-center m-2">
                 <img
                   src="https://i.pravatar.cc/40"
@@ -237,11 +243,6 @@ function Post({ post, deletePost }) {
                 >
                   Comment
                 </button>
-              </div>
-              <div>
-                {comments.map((comment, index) => (
-                  <Comment key={comment._id || index} comment={comment} />
-                ))}
               </div>
             </div>
           </div>
