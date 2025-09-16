@@ -6,6 +6,7 @@ import { useLogout} from "./hooks/useLogout";
 
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const { logout } = useLogout()
   const navigate = useNavigate()
   const handleClick = async () => {
@@ -99,7 +100,7 @@ const Navbar = () => {
               aria-expanded="false"
             >
               <div>
-                <span className="me-2">Sajid Al Amin</span>
+                <span className="me-2">{user?.email}</span>
                 <img
                   src="https://i.pravatar.cc/40"
                   alt="user profile"

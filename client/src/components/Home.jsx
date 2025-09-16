@@ -3,8 +3,6 @@ import Post from './Post'
 import LinkedExample from "./Sidebar_list";
 import NewPost from "./NewPost";
 import CreatePost from './CreatePost'
-// import { useState } from "react";
-// import postMaterial from "./PostMaterial";
 import { useEffect, useState } from "react";
 
 const Home = () => {
