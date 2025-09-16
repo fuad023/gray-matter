@@ -3,7 +3,7 @@ import requireAuth from "../middleware/authMiddleware.js";
 import {
   followUser, acceptRequest, rejectRequest, cancelRequest, unfollowUser,
   getFollowers, getFollowing, getIncomingRequests, getOutgoingRequests,
-  isFollowing, isFollowedBy,
+  isFollowing, isFollowedBy, hasPendingRequest,
 } from "../controllers/followController.js";
 
 const router = express.Router();
@@ -22,7 +22,8 @@ router.get("/following", getFollowing);
 router.get("/requests/incoming", getIncomingRequests);
 router.get("/requests/outgoing", getOutgoingRequests);
 
-router.get("/is-following/:recipient", protect, isFollowing);
-router.get("/followed-by/:requester", protect, isFollowedBy);
+router.get("/is-following/:recipient", isFollowing);
+router.get("/followed-by/:requester", isFollowedBy);
+router.get("/is-pending/:user_id", hasPendingRequest);
 
 export default router;

@@ -1,9 +1,30 @@
 import { format, set } from "date-fns";
 import { useState } from "react";
+import { useEffect } from "react";
 
 
 function UserList({ user }) {
-    const [isFollowing, setIsFollowing] = useState(false);
+    const [isFollowing, setIsFollowing] = useState("");
+
+    useEffect(() => {
+        const fetchFollowing = async () => {
+          const user = JSON.parse(localStorage.getItem('user'));
+          const response = await fetch(`http://localhost:4000/api/follow/is-pending/${user._id}`, {
+            headers: {
+              Authorization: user ? `Bearer ${user.token}` : '',
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+          if (response.ok) {
+            console.log("Fetch")
+            console.log(data);
+            setIsFollowing(data.outgoing);
+          }
+        };
+    
+        fetchFollowing();
+      }, []);
 
     const handleFollow = async () => {
     try {
@@ -35,11 +56,11 @@ function UserList({ user }) {
           src="https://i.pravatar.cc/40"
           alt="profile"
           className="rounded-circle"
-          width="85"
-          height="85"
+          width="80"
+          height="80"
         />
         <div>
-          <div className="fs-3 fw-semibold">
+          <div className="fs-4 fw-semibold">
             {user.name + " " + user.surname}
           </div>
           <div className="d-flex gap-2">

@@ -194,3 +194,26 @@ export const isFollowedBy = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+// check if there is a pending follow request between current user and given user
+export const hasPendingRequest = async (req, res) => {
+  const currentUser = req.user._id;
+  const { user_id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(user_id)) {
+    return res.status(404).json({ error: "Invalid user id!" });
+  }
+
+  try {
+    const outgoing = await Follow.findOne({ requester: currentUser, recipient: user_id, status: "pending" });
+    const incoming = await Follow.findOne({ requester: user_id, recipient: currentUser, status: "pending" });
+
+    res.status(200).json({
+      hasPendingRequest: !!(outgoing || incoming),
+      outgoing: !!outgoing,   // I sent a request to them
+      incoming: !!incoming    // They sent a request to me
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

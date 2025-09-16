@@ -54,7 +54,7 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Friend
+                Follow
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -64,7 +64,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    Friend Request
+                    Follow Request
                   </a>
                 </li>
                 <li>
@@ -72,7 +72,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    Friend List
+                    Follower
                   </a>
                 </li>
               </ul>
