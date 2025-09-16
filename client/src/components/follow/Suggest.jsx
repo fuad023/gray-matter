@@ -3,6 +3,7 @@ import LinkedExample from "../Sidebar_list";
 import UserList from "./UserList";
 
 function Suggest() {
+const currentUser = JSON.parse(localStorage.getItem('user'));
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
@@ -30,8 +31,13 @@ function Suggest() {
         <div className="d-none d-lg-block border me-4 position-fixed" style={{width: '200px'}}>
           <LinkedExample/>
         </div>
-        <div className="border flex-grow-1 p-4" style={{maxWidth: '800px'}}>
-        {users.map((user, index) => (
+        <div className="border flex-grow-1 p-4" style={{maxWidth: '1000px'}}>
+            <div>
+            <h2 className="mb-4">Suggested People:</h2>
+        </div>
+        {users
+        .filter((u) => u._id !== currentUser._id)
+        .map((user, index) => (
           <UserList key={user._id || index} user={user} />
         ))}
       </div>

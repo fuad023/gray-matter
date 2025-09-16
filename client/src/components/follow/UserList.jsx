@@ -12,7 +12,7 @@ function UserList({ user }) {
           height="85"
         />
         <div>
-          <div className="fs-2 fw-semibold">
+          <div className="fs-3 fw-semibold">
             {user.name + " " + user.surname}
           </div>
           <div className="d-flex gap-2">
@@ -20,9 +20,14 @@ function UserList({ user }) {
             <div>{"Followers " + user.follower_count}</div>
           </div>
         </div>
-        <div className="ms-auto justify-content-center align-items-center border">
-            <button className="border border-0">Follow</button>
-          </div>
+        <div className="ms-auto justify-content-center align-items-center border rounded">
+          <button
+            className="border border-0 rounded"
+            style={{ height: "40px", width: "100px" }}
+          >
+            Follow
+          </button>
+        </div>
       </div>
     </>
   );
