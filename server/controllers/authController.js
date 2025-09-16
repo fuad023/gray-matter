@@ -11,7 +11,7 @@ export const register = async (req, res) => {
   const { name, surname, email, password } = req.body;
 
   try {
-    const user = await UserModel.register(name, surname, email, password);
+    const user = await User.register(name, surname, email, password);
     const token = createToken(user._id);
 
     res.status(200).json({ message: "User registered successfully", _id: user._id, email, token });
