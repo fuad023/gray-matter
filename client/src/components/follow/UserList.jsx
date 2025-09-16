@@ -35,11 +35,11 @@ function UserList({ user }) {
           src="https://i.pravatar.cc/40"
           alt="profile"
           className="rounded-circle"
-          width="85"
-          height="85"
+          width="80"
+          height="80"
         />
         <div>
-          <div className="fs-3 fw-semibold">
+          <div className="fs-4 fw-semibold">
             {user.name + " " + user.surname}
           </div>
           <div className="d-flex gap-2">
