@@ -199,7 +199,7 @@ export const isFollowedBy = async (req, res) => {
 export const hasPendingRequest = async (req, res) => {
   const requester = req.user._id;
   const { recipient } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
+  if (!mongoose.Types.ObjectId.isValid(recipient)) {
     return res.status(404).json({ error: "Invalid user id!" });
   }
 
