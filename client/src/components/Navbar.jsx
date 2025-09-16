@@ -116,7 +116,7 @@ const Navbar = () => {
               aria-labelledby="dropdownMenuButton2"
             >
               <li>
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to="/profilepage">
                   Profile
                 </Link>
               </li>
