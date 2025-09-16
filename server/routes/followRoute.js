@@ -22,7 +22,7 @@ router.get("/following", getFollowing);
 router.get("/requests/incoming", getIncomingRequests);
 router.get("/requests/outgoing", getOutgoingRequests);
 
-router.get("/is-following/:recipient", protect, isFollowing);
-router.get("/followed-by/:requester", protect, isFollowedBy);
+router.get("/is-following/:recipient", isFollowing);
+router.get("/followed-by/:requester", isFollowedBy);
 
 export default router;
