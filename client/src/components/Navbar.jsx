@@ -121,9 +121,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="/manageprofile">
                   Manage Account
-                </a>
+                </Link>
               </li>
               <li>
                 <Button className="dropdown-item" onClick={handleClick}>

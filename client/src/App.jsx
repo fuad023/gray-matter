@@ -13,6 +13,7 @@ import Suggest from "./components/follow/Suggest";
 import ProfilePage from "./components/Profile";
 import Follower from "./components/Follower";
 import FollowRequests from "./components/FollowRequest";
+import ManageProfile from "./Profile/Profile";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/suggest" element={<Suggest />} />
             <Route path="/follower" element={<Follower />} />
             <Route path="/followrequests" element={<FollowRequests />} />
+            <Route path="/manageprofile" element={<ManageProfile />} />
           </Route>
         </Route>
       </Routes>
