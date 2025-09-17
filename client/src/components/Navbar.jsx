@@ -71,9 +71,9 @@ const Navbar = () => {
                   <hr className="dropdown-divider"></hr>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="/follower">
                     Follower
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>

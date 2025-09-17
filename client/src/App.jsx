@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 // import Profile from "./Profile/Profile";
 import Suggest from "./components/follow/Suggest";
 import ProfilePage from "./components/Profile";
+import Follower from "./components/Follower";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/profilepage" element={<ProfilePage />} />
             <Route path="/suggest" element={<Suggest />} />
+            <Route path="/follower" element={<Follower />} />
+
           </Route>
         </Route>
       </Routes>
