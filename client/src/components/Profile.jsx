@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 
 
 import Banner1 from "../assets/banner.jpg";
@@ -33,12 +33,27 @@ function Profile() {
     { src: Banner3, label: "Banner 3" },
   ];
 
- 
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const savedProfile = localStorage.getItem("profilePicSrc");
     const savedBanner = localStorage.getItem("bannerPicSrc");
     if (savedProfile) setProfilePic(savedProfile);
     if (savedBanner) setBannerPic(savedBanner);
+    const fetchUsers = async () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const response = await fetch(`http://localhost:4000/api/users/id/${user._id}`, {
+        headers: {
+          Authorization: user ? `Bearer ${user.token}` : '',
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setUsers(data);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
  
@@ -55,12 +70,12 @@ function Profile() {
   };
 
   const about = {
-    username: "sajid_al_amin",
+    username: users.username,
     contactNumber: "+880 1XXX-XXXXXX",
-    email: "sajid@example.com",
-    address: "Rampura, Dhaka 1219, Bangladesh",
-    followers: 1240,
-    following: 312,
+    email: users.email,
+    address: users.address,
+    followers: users.followers?.length || 0,
+    following: users.following?.length || 0,
     posts: 15,
   };
 
@@ -141,11 +156,11 @@ function Profile() {
           style={{ width: "810px" }}
         >
           <div className="d-flex flex-column ps-3">
-            <h3 className="fs-2 mb-1">Sajid Al Amin</h3>
+            <h3 className="fs-2 mb-1">{users.name + " " + users.surname}</h3>
             <p className="fs-5 mb-1">
-              Student at Ahsanullah University of Science &amp; Technology
+              {users.education}
             </p>
-            <p className="fs-6 mb-0">Rampura, Dhaka, Bangladesh</p>
+            <p className="fs-6 mb-0">{users.address}</p>
           </div>
 
 
@@ -228,7 +243,7 @@ function Profile() {
                     <h5 className="mb-2">Contact</h5>
                     <div className="mb-1">
                       <i className="bi bi-person-circle me-2 text-secondary"></i>
-                      <strong>Username:</strong> <span>{about.username}</span>
+                      <strong>Username:</strong> <span>{users.name + " " + users.surname}</span>
                     </div>
                     <div className="mb-1">
                       <i className="bi bi-telephone-fill me-2 text-primary"></i>
