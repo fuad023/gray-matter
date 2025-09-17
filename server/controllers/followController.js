@@ -124,14 +124,14 @@ export const getFollowers = async (req, res) => {
 export const getFollowing = async (req, res) => {
   const requester = req.user._id;
 
-  try {
-    const following = await Follow.find({ requester, status: "accepted" })
-      .populate("recipient", "name surname username email");
-
-    res.status(200).json(following.map(f => f.recipient));
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  const user = await User.findById(requester)
+    .select("following")
+    .populate("following", "name surname username email"); 
+  if (!user) {
+    return res.status(404).json({ error: "No such user!" });
   }
+
+  res.status(200).json(user);
 };
 
 // get pending incoming requests (people who want to follow me)
