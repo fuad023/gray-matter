@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Suggest from "./components/follow/Suggest";
 import ProfilePage from "./components/Profile";
 import Follower from "./components/Follower";
+import FollowRequests from "./components/FollowRequest";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
             <Route path="/profilepage" element={<ProfilePage />} />
             <Route path="/suggest" element={<Suggest />} />
             <Route path="/follower" element={<Follower />} />
-
+            <Route path="/followrequests" element={<FollowRequests />} />
           </Route>
         </Route>
       </Routes>

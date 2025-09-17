@@ -63,16 +63,16 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Follow Request
-                  </a>
+                  <Link className="dropdown-item" to="/followrequests">
+                    Follwer
+                  </Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider"></hr>
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/follower">
-                    Follower
+                    Follow Request
                   </Link>
                 </li>
               </ul>
