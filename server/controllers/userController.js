@@ -16,7 +16,7 @@ export const getUsers = async (req, res) => {
 export const getUsersExceptFollowing = async (req, res) => {
   const currentUserId = req.user._id;
   const users = await User.aggregate([
-    { $match: { _id: { $ne: currentUserId }, followers: { $ne: currentUserId } } }, // exclude current user and users whom current user follows
+    { $match: { _id: { $ne: currentUserId }, following: { $ne: currentUserId } } }, // exclude current user and users whom current user follows
     { $project: { _id: 1, name: 1, surname: 1, username: 1, email: 1, follower_count: { $size: "$followers" } } },
     { $sort: { createdAt: -1 } }
   ]);

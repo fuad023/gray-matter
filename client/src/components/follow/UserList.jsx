@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 function UserList({ user }) {
   const [sentRequest, setSentRequest] = useState(false);
   const [receivedRequest, setReceivedRequest] = useState(false);
-  const [isFollowAccepted, setIsFollowAccepted] = useState(false);
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -19,19 +18,13 @@ function UserList({ user }) {
       );
       const data = await response.json();
       if (response.ok) {
-          // Accepted follow
-          console.log(data);
-          if (!data.hasPendingRequest) {
-            setIsFollowAccepted(true);
-          } 
-          // Pending request
-          else if (data.hasPendingRequest) {
-            if (data.outgoing) {
-              setSentRequest(true);
-            } else {
-              setReceivedRequest(true);
-            }
+        if (data.hasPendingRequest) {
+          if (data.outgoing) {
+            setSentRequest(true);
+          } else {
+            setReceivedRequest(true);
           }
+        }
       }
     };
 
@@ -58,6 +51,29 @@ function UserList({ user }) {
       setSentRequest(true);
     } catch (err) {
       console.error("Failed to send follow request:", err);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      const res = await fetch(`http://localhost:4000/api/follow/cancel/${user._id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: currentUser ? `Bearer ${currentUser.token}` : "",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        console.error(data.error);
+        return;
+      }
+
+      setSentRequest(false);
+    } catch (err) {
+      console.error("Failed to cancel follow request:", err);
     }
   };
 
@@ -140,22 +156,12 @@ function UserList({ user }) {
 
   // 🔀 SWITCH GATE UI
   const renderButton = () => {
-    if (isFollowAccepted) {
+    if (sentRequest) {
       return (
         <button
           className="border border-0 rounded"
           style={{ height: "40px", width: "150px" }}
-          onClick={handleUnFollow}
-        >
-          Unfollow
-        </button>
-      );
-    } else if (sentRequest) {
-      return (
-        <button
-          className="border border-0 rounded"
-          style={{ height: "40px", width: "150px" }}
-          onClick={handleUnFollow}
+          onClick={handleCancel}
         >
           Cancel Request
         </button>
@@ -202,9 +208,7 @@ function UserList({ user }) {
         height="80"
       />
       <div>
-        <div className="fs-4 fw-semibold">
-          {user.name + " " + user.surname}
-        </div>
+        <div className="fs-4 fw-semibold">{user.name + " " + user.surname}</div>
         <div className="d-flex gap-2">
           <div className="fs-6">{"@" + user.username + " ."}</div>
           <div>{"Followers " + user.follower_count}</div>
