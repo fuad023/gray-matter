@@ -3,9 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../components/Sidebar'
 import Button from "react-bootstrap/esm/Button";
 import { useLogout} from "./hooks/useLogout";
+import { useState, useEffect } from "react";
 
 
 const Navbar = () => {
+   //const savedProfile = localStorage.getItem("profilePicSrc");
+  const [profilePic, setProfilePic] = useState([]);
+ 
   const user = JSON.parse(localStorage.getItem("user"));
   const { logout } = useLogout()
   const navigate = useNavigate()
@@ -13,6 +17,12 @@ const Navbar = () => {
     await logout()
     navigate('/login')
   }
+
+  useEffect(() => {
+      const savedProfile = localStorage.getItem("profilePicSrc");
+      if (savedProfile) setProfilePic(savedProfile);
+      
+    }, []);
 
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -102,7 +112,7 @@ const Navbar = () => {
               <div>
                 <span className="me-2">{user?.email}</span>
                 <img
-                  src="https://i.pravatar.cc/40"
+                  src={profilePic || "https://i.pravatar.cc/40"}
                   alt="user profile"
                   className="rounded-circle"
                   width="32"
