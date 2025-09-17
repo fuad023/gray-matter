@@ -8,28 +8,27 @@ import { useSignup } from "./components/hooks/useSignup.jsx";
 
 function LoginReg() {
   const {
-  register: registerSignup,
-  handleSubmit: handleSubmitSignup,
-  reset: resetSignup,
-  formState: { errors: errorsSignup, isSubmitting: isSubmittingSignup },
-} = useForm();
+    register: registerSignup,
+    handleSubmit: handleSubmitSignup,
+    reset: resetSignup,
+    formState: { errors: errorsSignup, isSubmitting: isSubmittingSignup },
+  } = useForm();
 
-const {
-  register: registerSignin,
-  handleSubmit: handleSubmitSignin,
-  reset: resetSignin,
-  formState: { errors: errorsSignin, isSubmitting: isSubmittingSignin },
-} = useForm();
+  const {
+    register: registerSignin,
+    handleSubmit: handleSubmitSignin,
+    reset: resetSignin,
+    formState: { errors: errorsSignin, isSubmitting: isSubmittingSignin },
+  } = useForm();
 
   const { signup, error, isLoading } = useSignup();
   const { login, error: loginError, isLoading: loginIsLoading } = useLogin();
 
   const onSubmit = async (data) => {
-    await signup(data.name, data.surname, data.email, data.password);
+    await signup(data.name, data.surname, data.username, data.email, data.password);
   };
 
   const onLogin = async (data) => {
-    
     await login(data.email, data.password);
   };
 
@@ -62,20 +61,46 @@ const {
               type="text"
               {...registerSignup("name", {
                 required: { value: true, message: "*This field is required" },
-                
               })}
               placeholder="Name"
             />
-            {errorsSignup.name && <div className="text-danger small">{errorsSignup.name.message}</div>}
+            {errorsSignup.name && (
+              <div className="text-danger small">
+                {errorsSignup.name.message}
+              </div>
+            )}
             <input
               type="text"
               {...registerSignup("surname", {
                 required: { value: true, message: "*This field is required" },
-               
               })}
               placeholder="Surname"
             />
-            {errorsSignup.surname && <div className="text-danger small">{errorsSignup.surname.message}</div>}
+            {errorsSignup.surname && (
+              <div className="text-danger small">
+                {errorsSignup.surname.message}
+              </div>
+            )}
+            <input
+              type="text"
+              {...registerSignup("username", {
+                required: { value: true, message: "*This field is required" },
+                minLength: {
+                  value: 6,
+                  message: "*Username should be 6 characters!",
+                },
+                maxLength: {
+                  value: 12,
+                  message: "*Username should be less than 12 characters!",
+                },
+              })}
+              placeholder="Username"
+            />
+            {errorsSignup.username && (
+              <div className="text-danger small">
+                {errorsSignup.username.message}
+              </div>
+            )}
             <input
               type="email"
               {...registerSignup("email", {
@@ -84,7 +109,9 @@ const {
               placeholder="Email"
             />
             {errorsSignup.email && (
-              <div className="text-danger small">{errorsSignup.email.message}</div>
+              <div className="text-danger small">
+                {errorsSignup.email.message}
+              </div>
             )}
             <input
               type="password"
@@ -98,7 +125,9 @@ const {
               placeholder="password"
             />
             {errorsSignup.password && (
-              <div className="text-danger small">{errorsSignup.password.message}</div>
+              <div className="text-danger small">
+                {errorsSignup.password.message}
+              </div>
             )}
             <button disabled={isSubmittingSignup} type="submit">
               Sign Up
@@ -135,7 +164,9 @@ const {
               placeholder="Email"
             />
             {errorsSignin.email && (
-              <div className="text-danger small">{errorsSignin.email.message}</div>
+              <div className="text-danger small">
+                {errorsSignin.email.message}
+              </div>
             )}
             <input
               type="password"
@@ -149,11 +180,15 @@ const {
               placeholder="password"
             />
             {errorsSignin.password && (
-              <div className="text-danger small">{errorsSignin.password.message}</div>
+              <div className="text-danger small">
+                {errorsSignin.password.message}
+              </div>
             )}
 
             <a href="#">Forgot your password?</a>
-            <button type="submit" disabled = {isSubmittingSignin}>Sign In</button>
+            <button type="submit" disabled={isSubmittingSignin}>
+              Sign In
+            </button>
             {loginError && <div className="error">{loginError}</div>}
           </form>
         </div>

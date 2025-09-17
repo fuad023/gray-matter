@@ -6,11 +6,16 @@ const userSchema = new mongoose.Schema({
   // authentication
   name: { type: String, required: true },
   surname: { type: String, required: true },
-  username: { type: String, trim: true, unique: true, sparse: true },
+  username: { type: String, required: true, unique: true, lowercase: true, minlength: 6, maxlength: 12 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }, // hash string
 
   // profile
+  profile_pic: { type: String, default: "" },
+  banner_pic: { type: String, default: "" },
+  address: { type: String, default: "" },
+  work: { type: String, default: "" },
+  education: { type: String, default: "" },
   bio: { type: String, default: "", maxlength: 120, trim: true },
   birthday: { type: Date },
   website: { type: String, default: "" },
@@ -30,8 +35,8 @@ const userSchema = new mongoose.Schema({
 );
 
 // static signup method
-userSchema.statics.register = async function (name, surname, email, password) {
-  if (!name || !surname || !email || !password) {
+userSchema.statics.register = async function (name, surname, username, email, password) {
+  if (!name || !surname || !username || !email || !password) {
     throw Error("Please fill all the fields.");
   }
 
@@ -53,7 +58,7 @@ userSchema.statics.register = async function (name, surname, email, password) {
   const hash = await bcrypt.hash(password, salt);
 
   // save doc on database
-  const user = await this.create({ name, surname, email, password: hash });
+  const user = await this.create({ name, surname, username, email, password: hash });
   return user;
 };
 

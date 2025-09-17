@@ -8,7 +8,10 @@ import Home from "./components/Home";
 import About from "./components/About";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./Profile/Profile";
+// import Profile from "./Profile/Profile";
+import Suggest from "./components/follow/Suggest";
+import ProfilePage from "./components/Profile";
+import Follower from "./components/Follower";
 
 function App() {
   return (
@@ -24,7 +27,10 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profilepage" element={<ProfilePage />} />
+            <Route path="/suggest" element={<Suggest />} />
+            <Route path="/follower" element={<Follower />} />
+
           </Route>
         </Route>
       </Routes>

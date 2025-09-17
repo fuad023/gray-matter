@@ -54,26 +54,26 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Friend
+                Follow
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Add Friend
-                  </a>
+                  <Link className="dropdown-item" to="/suggest">
+                    Suggestion
+                  </Link>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    Friend Request
+                    Follow Request
                   </a>
                 </li>
                 <li>
                   <hr className="dropdown-divider"></hr>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Friend List
-                  </a>
+                  <Link className="dropdown-item" to="/follower">
+                    Follower
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -116,7 +116,7 @@ const Navbar = () => {
               aria-labelledby="dropdownMenuButton2"
             >
               <li>
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to="/profilepage">
                   Profile
                 </Link>
               </li>
@@ -135,6 +135,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    
   );
 };
 

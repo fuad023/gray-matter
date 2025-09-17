@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Post from "../models/postModel.js";
+import User from "../models/userModel.js";
 
 // get all posts
 export const getPosts = async (req, res) => {
@@ -36,14 +37,14 @@ export const createPost = async (req, res) => {
     emptyFields.push("content");
   }
   if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all the fields", emptyFields });
+    return res.status(400).json({ error: "Please fill in all the fields", emptyFields });
   }
 
   // add doc to db
   try {
     const post = await Post.create({ author_id, title, content });
+    User.findByIdAndUpdate(author_id, { $push: { posts: post._id } });
+
     await post.populate("author_id", "name surname");
     res.status(200).json(post);
   } catch (error) {
