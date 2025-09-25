@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar'
 import Button from "react-bootstrap/esm/Button";
 import { useLogout} from "./hooks/useLogout";
 import { useState, useEffect } from "react";
+import Profile from "./Profile";
 
 
 const Navbar = () => {
@@ -83,6 +84,11 @@ const Navbar = () => {
                 <li>
                   <Link className="dropdown-item" to="/follower">
                     Follow Request
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/following">
+                    Following
                   </Link>
                 </li>
               </ul>

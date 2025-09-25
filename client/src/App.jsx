@@ -14,6 +14,7 @@ import ProfilePage from "./components/Profile";
 import Follower from "./components/Follower";
 import FollowRequests from "./components/FollowRequest";
 import ManageProfile from "./Profile/Profile";
+import Follwoing from "./components/Follwoing";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/follower" element={<Follower />} />
             <Route path="/followrequests" element={<FollowRequests />} />
             <Route path="/manageprofile" element={<ManageProfile />} />
+            <Route path="/following" element={<Follwoing />} />
           </Route>
         </Route>
       </Routes>

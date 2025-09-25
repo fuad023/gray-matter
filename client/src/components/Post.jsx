@@ -126,9 +126,12 @@ function Post({ post, deletePost }) {
             height="45"
           />
           <div>
-            <div className="fw-bold">
+            <button className="border border-0 bg-transparent p-0">
+              <div className="fw-bold">
               {post.author_id.name + " " + post.author_id.surname}
             </div>
+            </button>
+            
             <div style={{ fontSize: "15px" }}>
               {post.createdAt ? format(new Date(post.createdAt), "PP p") : ""}
             </div>

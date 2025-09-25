@@ -4,6 +4,7 @@ import LinkedExample from "./Sidebar_list";
 import NewPost from "./NewPost";
 import CreatePost from './CreatePost'
 import { useEffect, useState } from "react";
+import FollowSidebar from "./FollowSidebar";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -62,7 +63,7 @@ const addPost = (post) => {
           ))}
         </div>
         <div className="d-none d-md-block border ms-4" style={{width: '200px'}}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis veritatis recusandae sunt nesciunt quidem adipisci repellendus facere nam amet voluptatem? Eos delectus animi dignissimos officiis rem possimus mollitia quod accusamus.
+          <FollowSidebar />
         </div>
       </div>
     </>

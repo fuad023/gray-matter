@@ -10,7 +10,8 @@ import Profile1 from "../assets/profile1.png";
 import Profile2 from "../assets/profile2.png";
 import Profile3 from "../assets/profile3.png";
 
-function Profile() {
+function Profile({user_id}) {
+  user_id ? user_id : user_id = JSON.parse(localStorage.getItem("user"))._id;
   const [activeTab, setActiveTab] = useState("about");
 
 
@@ -40,10 +41,10 @@ function Profile() {
     if (savedProfile) setProfilePic(savedProfile);
     if (savedBanner) setBannerPic(savedBanner);
     const fetchUsers = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const response = await fetch(`http://localhost:4000/api/users/id/${user._id}`, {
+      const currentUser = JSON.parse(localStorage.getItem('user'));
+      const response = await fetch(`http://localhost:4000/api/users/id/${user_id}`, {
         headers: {
-          Authorization: user ? `Bearer ${user.token}` : '',
+          Authorization: currentUser ? `Bearer ${currentUser.token}` : '',
           "Content-Type": "application/json",
         },
       });
